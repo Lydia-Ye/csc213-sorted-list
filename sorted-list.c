@@ -105,7 +105,11 @@ void sorted_list_print(sorted_list_t* lst) {
 
   // loop through each node in the list to count the appearance of value
   while (current != NULL) {
-    printf("%d ", current->value);
+    if (current->next != NULL) {
+      printf("%d ", current->value);
+    } else {
+      printf("%d", current->value);
+    }
     current = current->next;
   }
   printf("\n");
