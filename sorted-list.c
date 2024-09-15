@@ -57,15 +57,19 @@ void sorted_list_insert(sorted_list_t* lst, int value) {
 
   // if lst is not empty, find the position to insert the new node
   node_t * current = lst->head;
-  node_t * prev = NULL;
 
-  while (current->value <= newNode->value) {
-    prev = current;
-    current = current->next;
+  if (current->value > newNode->value) {
+    lst->head = newNode;
+    newNode->next = current;
+    return;
   }
 
-  prev->next = newNode;
-  newNode->next = current;
+  while ((current->value < newNode->value) && (current->next != NULL)) {
+    current = current->next; 
+  }
+
+  newNode->next = current->next;
+  current->next = newNode;
 }
 
 /**
@@ -101,7 +105,8 @@ void sorted_list_print(sorted_list_t* lst) {
 
   // loop through each node in the list to count the appearance of value
   while (current != NULL) {
-    printf("%d\n", current->value);
+    printf("%d ", current->value);
     current = current->next;
   }
+  printf("\n");
 }
