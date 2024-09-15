@@ -2,11 +2,15 @@
 
 #include <stdlib.h>
 
+/// This struct represents the node in the sorted list.
+typedef struct node {
+  int value;
+  struct node * next;
+} node_t;
+
 /// This struct represents the sorted list.
-/// You may use an additional struct to represent node types or other components of the data
-/// structure.
 typedef struct sorted_list {
-  // TODO: Add fields here
+  node_t * head;
 } sorted_list_t;
 
 /// Initialize a sorted list.
