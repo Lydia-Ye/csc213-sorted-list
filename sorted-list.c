@@ -24,16 +24,15 @@ void sorted_list_init(sorted_list_t* lst) {
  */
 void sorted_list_destroy(sorted_list_t* lst) {
   node_t * current = lst->head;
-  node_t * next = current->next;
+  node_t * next = NULL;
 
   // free each node in the sorted list
   while (current != NULL) {
+    next = current->next;
     free(current);
     current = next;
-    next = current->next;
   }
 
-  // reinitializa the empty sorted list
   lst->head = NULL;
 }
 
@@ -49,25 +48,30 @@ void sorted_list_insert(sorted_list_t* lst, int value) {
   newNode->value = value;
   newNode->next = NULL;
 
-  // insert the new node to an empty sorted list
+  // if lst is empty
   if (lst->head == NULL) {
+    // set new node to be the head
     lst->head = newNode;
     return;
   }
 
-  // if lst is not empty, find the position to insert the new node
+  // if new node is smaller than lst head
+  if (lst->head->value > newNode->value) {
+    // insert new node add the beginning of the list
+    newNode->next = lst->head;
+    // set the new node to be the head
+    lst->head = newNode;
+    return;
+  }
+
+  // general case: traverse through the list to find the position to insert the new node
   node_t * current = lst->head;
 
-  if (current->value > newNode->value) {
-    lst->head = newNode;
-    newNode->next = current;
-    return;
-  }
-
-  while ((current->value < newNode->value) && (current->next != NULL)) {
+  while ((current->next != NULL) && (current->next->value < newNode->value)) {
     current = current->next; 
   }
 
+  // insert the new node to the correct position
   newNode->next = current->next;
   current->next = newNode;
 }
